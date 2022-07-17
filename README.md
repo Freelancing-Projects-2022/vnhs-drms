@@ -2,7 +2,7 @@
 The purpose of this system is to provide a online platform for students to request needed scholastic documents.
 
 ## Description
-This system is built using PHP, Bootstrap and XAMPP. This also uses Google 0Auth for the email facility.
+This system was built using PHP, Bootstrap and XAMPP. This also uses Google 0Auth for the email facility.
 
 ## Getting Started
 
@@ -19,13 +19,14 @@ This system is built using PHP, Bootstrap and XAMPP. This also uses Google 0Auth
 * Download the system files here.
 * Download XAMPP Version 8.0.6.
 * Paste the system files in the XAMPP htocs folder.
-* 
+* Open XAMPP PhpMyAdmin and create a database with a name "vnhs_drms".
+* Click the database, and click "IMPORT".
+* An upload window will open up, select the file "vnhs_drms.sql", and click Go.
 
 ### Executing program
 
-* How to run the program
-* Step-by-step bullets
+* To run the system, open your browser and type in
 ```
-code blocks for commands
+http://localhost/vnhs-drms/
 ```
 
