@@ -1,5 +1,7 @@
-
  <?php
+    // This is the Footer of the page
+    // All the javascript sources are declared here
+
     include("dbcon.php");
     $query = mysqli_query($conn, "SELECT * FROM settings");                    
     $row = mysqli_fetch_array($query);

@@ -1,5 +1,11 @@
 <?php
- 
+// --------------------------------------------------------------------------------
+// This creates a link from your application to Google APIs
+// After linking, Google will generate a token that allows your app to use specific APIs
+// Don't change anything here.
+// --------------------------------------------------------------------------------
+
+
 /**
  * PHPMailer - PHP email creation and transport class.
  * PHP Version 5.5
@@ -59,9 +65,11 @@ if (!isset($_GET['code']) && !isset($_GET['provider'])) {
 }
  
 require 'vendor/autoload.php';
-require_once 'class-db.php';
- 
-session_start();
+require_once 'class-db.php'; 
+require_once 'config.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
  
 $providerName = '';
  
@@ -77,12 +85,12 @@ if (!in_array($providerName, ['Google', 'Microsoft', 'Yahoo'])) {
  
 //These details are obtained by setting up an app in the Google developer console,
 //or whichever provider you're using.
-$clientId = '938596916632-3ppseq9jf54jj37nc5daofmvmorq0f07.apps.googleusercontent.com';
-$clientSecret = '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';
+$clientId = GOOGLE_CLIENT_ID;
+$clientSecret = GOOGLE_CLIENT_SECRET;
  
 //If this automatic URL doesn't work, set it yourself manually to the URL of this script
 //$redirectUri = (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-$redirectUri = 'https://ad7a-49-145-102-251.jp.ngrok.io/vnhs-drms/get_oauth_token.php';
+$redirectUri = GET_OAUTH_TOKEN_LINK;
  
 $params = [
     'clientId' => $clientId,

@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <?php
+        // This is where the first page of the app loads
+        // This also contains the login page
 
+        include("dbcon.php");
+        include("util.php");
+        $query = mysqli_query($conn, "SELECT * FROM settings");                    
+        $row = mysqli_fetch_array($query);
+
+        $logo = "images/logo.png";
+        $systemDisplayName = "";
+        $organizationName = "";
+        $maxCountOfRequestPerDay = "";
+        if ($row != null) {                    
+            $id = $row['id'];    
+            $logo = $row['logo'];         
+            $systemDisplayName = $row['system_display_name'];
+            $organizationName = $row['organization_name'];
+        }
+    ?>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>VNHS | DOCUMENT REQUEST MANAGEMENT SYSTEM</title>
+        <title><?=$organizationName?> | <?=$systemDisplayName?></title>
 
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -50,21 +69,6 @@
         }
         else {
             session_destroy();
-        }
-        include("dbcon.php");
-        include("util.php");
-        $query = mysqli_query($conn, "SELECT * FROM settings");                    
-        $row = mysqli_fetch_array($query);
-
-        $logo = "images/logo.png";
-        $systemDisplayName = "";
-        $organizationName = "";
-        $maxCountOfRequestPerDay = "";
-        if ($row != null) {                    
-            $id = $row['id'];    
-            $logo = $row['logo'];         
-            $systemDisplayName = $row['system_display_name'];
-            $organizationName = $row['organization_name'];
         }
     ?>
     <body>

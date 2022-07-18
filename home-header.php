@@ -1,9 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <?php
+    // This is the Header of the page
+    // All the CSS sources are declared here
+
+    include("dbcon.php");
+    $query = mysqli_query($conn, "SELECT * FROM settings");                    
+    $row = mysqli_fetch_array($query);
+    $systemDisplayName = "";
+    if ($row != null) {       
+        $systemDisplayName = $row['system_display_name'];
+    }
+
+    ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $_SESSION['pageTitle']; ?> | DOCUMENT REQUEST MANAGEMENT SYSTEM</title>
+    <title><?= $_SESSION['pageTitle']; ?> | <?=$systemDisplayName?></title>
     <!-- DEFAULT CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -76,6 +89,7 @@
 <body>
     <div id="wrapper">        
         <!-- START - SIDE BAR -->       
+        <!-- The SideBar Menu is changing depending on the User Type of the user currently logged in -->   
         <?php            
             $sideBarLocation = "pages/student/side-bar.php";
             if($_SESSION['userGroup'] == "ADMIN") {

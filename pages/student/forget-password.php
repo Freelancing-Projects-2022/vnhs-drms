@@ -2,11 +2,23 @@
 <html>
 
 <head>
+    <?php
+        include("../../dbcon.php");
+        include("../../util.php");
+        $query = mysqli_query($conn, "SELECT * FROM settings");                    
+        $row = mysqli_fetch_array($query);
 
+        $systemDisplayName = "";
+        $organizationName = "";
+        if ($row != null) {                
+            $systemDisplayName = $row['system_display_name'];
+            $organizationName = $row['organization_name'];
+        }
+    ?>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>VNHS | DOCUMENT REQUEST MANAGEMENT SYSTEM</title>
+    <title><?=$organizationName?> | <?=$systemDisplayName?></title>
 
     <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../assets/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -53,26 +65,32 @@
                 <div class="col-sm-12 border-bottom">
                     <h2 class="text-center"><b>Forgot Password</b></h2>
                 </div>
-                <div class="col-sm-12">                              
-                    <div class="form-group text-center col-sm-12 m-t-md">
-                        <label>Learner's Refence Number (LRN)</label>
-                        <input type="text" placeholder="Enter 12 digit LRN" class="form-control  text-center" maxlength="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" id="txtLRN" name="txtLRN" required>
-                    </div>   
-                    <div class="form-group text-center col-sm-12">
-                        <label>Email Address</label>
-                        <input type="email" placeholder="johndoe@gmail.com" class="form-control  text-center" id="txtEmailAddress" name="txtEmailAddress" required>
-                        <br><label>We will send a recovery code if this matches to your account.</label>
-                    </div>                                              
-                    <div class="col-sm-12 border-top text-center m-b-lg m-t-sm">
-                        <button onClick="sendRecoveryCode()" class="btn btn-primary m-t"><i class="fa fa-mail-reply m-r-xs"></i>Send Code</button>
+                <div class="col-sm-12">
+                    <div id="divSendRecoveryCode" >                           
+                        <div class="form-group text-center col-sm-12 m-t-md">
+                            <label>Learner's Refence Number (LRN)</label>
+                            <input type="text" placeholder="Enter 12 digit LRN" class="form-control  text-center" maxlength="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" id="txtLRN" name="txtLRN" required>
+                        </div>   
+                        <div class="form-group text-center col-sm-12">
+                            <label>Email Address</label>
+                            <input type="email" placeholder="johndoe@gmail.com" class="form-control  text-center" id="txtEmailAddress" name="txtEmailAddress" required>
+                            <br><label>We will send a recovery code if this matches to your account.</label>
+                        </div>                                              
+                        <div class="col-sm-12 border-top text-center m-b-lg m-t-sm">
+                            <button onClick="cancelRecovery()" class="btn btn-default m-t"><i class="fa fa fa-mail-reply m-r-xs"></i>Cancel</button>
+                            <button onClick="sendRecoveryCode()" class="btn btn-primary m-t"><i class="fa fa-paper-plane m-r-xs"></i>Send Code</button>
+                        </div>
                     </div>
-                    <div class="form-group text-center col-sm-12">
-                        <label>Enter Recovery Code</label>
-                        <input type="text" placeholder="" class="form-control text-center" id="txtRecoverCode" name="txtRecoverCode" style="font-size: 28px; font-weight: 800 !important;font-family: monospace;">
-                        
-                    </div>                       
-                    <div class="col-sm-12 border-top text-center m-b-lg m-t-sm">
-                        <button onClick="submitRecoverCode()" class="btn btn-success m-t"><i class="fa fa-check m-r-xs"></i>Submit Code</button>
+                    <div id="divEnterRecoveryCode" style="display:none;">                         
+                        <div class="form-group text-center col-sm-12 m-t-md">
+                            <label>Enter Recovery Code</label>
+                            <input type="text" placeholder="" class="form-control text-center" id="txtRecoverCode" name="txtRecoverCode" style="font-size: 28px; font-weight: 800 !important;font-family: monospace;">
+                            
+                        </div>                       
+                        <div class="col-sm-12 border-top text-center m-b-lg m-t-sm">
+                            <button onClick="$('#divEnterRecoveryCode').hide();$('#divSendRecoveryCode').show();" class="btn btn-warning m-t"><i class="fa fa fa-mail-reply m-r-xs"></i>Back</button>
+                            <button onClick="submitRecoverCode()" class="btn btn-success m-t"><i class="fa fa-check m-r-xs"></i>Submit</button>
+                        </div>
                     </div>
                 </div>
                 <div class="clearfix m-b-sm"></div>
@@ -90,15 +108,8 @@
     <script src="../../assets/js/plugins/sweetalert/sweetalert.min.js"></script>
 
     <script type="text/javascript">
-        function checkPassword(reTypedPassword) {
-            if(reTypedPassword != $('#txtPassword').val() || reTypedPassword != $('#txtReTypePassword').val()) {
-                $(':input[type="submit"]').prop('disabled', true);
-                $('#frmGrpReTypePassword').addClass('has-error');
-            }
-            else {                
-                $(':input[type="submit"]').prop('disabled', false);
-                $('#frmGrpReTypePassword').removeClass('has-error');
-            }
+        function cancelRecovery() {            
+            window.location.href='../../index.php';
         }
 
         function sendRecoveryCode() {
@@ -115,6 +126,9 @@
                     response = JSON.parse(response);
                     if(response.msgType == "success") {
                         swal("Success", response.msgStr, "success");
+                        $("txtRecoverCode").val("");
+                        $("#divEnterRecoveryCode").show();
+                        $("#divSendRecoveryCode").hide();
                     }
                     else {                    
                         swal("Invalid", response.msgStr, "error");
