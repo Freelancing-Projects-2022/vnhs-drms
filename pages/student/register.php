@@ -75,7 +75,7 @@
                     <form id="frmRegistration" class="m-t" role="form" method="POST" action="../../backend/student-registration-add.php">                                
                         <div class="form-group col-sm-3">
                             <label>LRN</label>
-                            <input type="text" placeholder="Enter 12 digit LRN" class="form-control" maxlength="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" id="txtLRN" name="txtLRN" required>
+                            <input type="text" placeholder="Enter 12 digit LRN" class="form-control" minlength="12" maxlength="12" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" id="txtLRN" name="txtLRN" required>
                         </div>   
                         <div class="col-sm-9">
                             <div class="alert alert-info m-t-md" style="padding: 10px 15px;">

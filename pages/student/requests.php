@@ -761,14 +761,20 @@ body.mini-navbar .nav-header {
         }); 
     }
 
-    function confirmRequestSchedule(id) {
+    function isWeekend(date = new Date()) {
+    return date.getDay() === 6 || date.getDay() === 0;
+    }
+
+    function confirmRequestSchedule(id, dateApprovedStr) {
         var datePickUp = $("#txtDatePickUp").val();
         var dateReg = /^\d{2}\/\d{2}\/\d{4}$/;
 
         var dateEntered = new Date(datePickUp);
+        var dateApproved = new Date(dateApprovedStr);
         var now = new Date();
         now.setHours(0,0,0,0);
 
+        alert(dateEntered  + " " + dateApproved  + " " + (dateEntered.getDay() - dateApproved.getDay()));
         if(datePickUp === "") {
             swal("Empty Date!", "Please provide Date for Pickup.", "error");
         }
@@ -777,6 +783,12 @@ body.mini-navbar .nav-header {
         }
         else if(dateEntered < now) {
             swal("Invalid Date!", "Cannot set date that is in the past.", "error");
+        }
+        else if(isWeekend(dateEntered)) {
+            swal("Invalid Date!", "Registrar doesn't cater requests on weekends.", "error");
+        }
+        else if((dateEntered.getDay() - dateApproved.getDay()) <= 3) {
+            swal("Invalid Date!", "You can only set schedule 3 days after the confirmation date.", "error");
         }
         else {
 	        $('#ibox').children('.ibox-content').toggleClass('sk-loading');

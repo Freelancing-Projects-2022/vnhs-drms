@@ -15,7 +15,7 @@
         $pickupDate = "--";
         $statusStr = "";
         $modalTitle = "Schedule Appointment";
-        $actionsStr = "<button type=\"button\" class=\"btn btn-primary\" onClick=\"confirmRequestSchedule(". $requestId .")\">Confirm Schedule</button>";
+        $actionsStr = "<button type=\"button\" class=\"btn btn-primary\" onClick=\"confirmRequestSchedule(". $requestId .", '" . date('m/d/Y', strtotime($row['approved_date'])) . "')\">Confirm Schedule</button>";
         if($row['status'] == 'FOR APPROVAL') {
             $statusStr = "<span class=\"label label-success\">For Approval</span>";
         }
@@ -25,7 +25,7 @@
             if($row['pickup_date'] != '') {
                 $pickupDate = date('d M Y', strtotime($row['pickup_date']));
                 $modalTitle = "Reschedule Appointment";
-                $actionsStr = "<button type=\"button\" class=\"btn btn-primary\" onClick=\"confirmRequestSchedule(". $requestId .")\">Confirm Reschedule</button>";
+                $actionsStr = "<button type=\"button\" class=\"btn btn-primary\" onClick=\"confirmRequestSchedule(". $requestId .", '" . date('m/d/Y', strtotime($row['approved_date'])) . "')\">Confirm Reschedule</button>";
             }
         }
         else if($row['status'] == 'DECLINED') {

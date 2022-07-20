@@ -8,7 +8,7 @@ use Symfony\Component\Mime\Email;
 // Change the recipient email first and then open browser
 // Type in http://localhost/vnhs-drms/sendEmail.php to test the sending email facility
 // ------------------------------------------------------------------------------------>
-//sendEmail('pearlica09@gmail.com', 'Random Tile', 'This is a body of the email');
+sendEmail('pearlica09@gmail.com', 'Sample ulit', '<h1>This is a body of the email</h1>');
  
 function sendEmail($toEmail, $subject, $msgBody) {
     require_once 'config.php';

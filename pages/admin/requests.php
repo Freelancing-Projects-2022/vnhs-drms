@@ -384,7 +384,7 @@ body.mini-navbar .nav-header {
             "initComplete": function() {
                 var column = this.api().column(0);
                 var values = [0, 1, 2, 3, 4];
-                var valuesStr = ["Cancelled", "For Releasing", "For Approval", "Resubmission", "Complete"];
+                var valuesStr = ["Cancelled", "For Releasing", "For Approval", "Resubmission", "Completed"];
 
                 $('<select id="categoryFilter" class="form-control"><option value="">Show All</option></select>').append(values.sort().map(function(o) {
                     return '<option value="' + o + '">' + valuesStr[values.indexOf(o)] + '</option>';

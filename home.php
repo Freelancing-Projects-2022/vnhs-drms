@@ -8,7 +8,7 @@
     if(isset($_SESSION['currentPage'])) {
         include('home-header.php');
         include($_SESSION['currentPage']);
-}
+    }
     else {    
         header('location: index.php');
     }
